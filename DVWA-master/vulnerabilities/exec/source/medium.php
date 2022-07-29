@@ -1,8 +1,11 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 	// Get input
-	$target = $_REQUEST[ 'ip' ];
+	$target = $_POST[ 'ip' ];
+	$target = stripslashes( $target );
+
 
 	// Set blacklist
 	$substitutions = array(
@@ -24,7 +27,7 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 	}
 
 	// Feedback for the end user
-	$html .= "<pre>{$cmd}</pre>";
+	echo "<pre>{$cmd}</pre>";
 }
-
+generateSessionToken();
 ?>

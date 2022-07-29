@@ -1,11 +1,12 @@
 <?php
 
-if( isset( $_GET[ 'Login' ] ) ) {
+if( isset( $_POST[ 'Login' ] ) ) {
+checkToken($_REQUEST['user_token'], $_SESSION['session_token'], 'index.php');
 	// Get username
-	$user = $_GET[ 'username' ];
+	$user = $_POST[ 'username' ];
 
 	// Get password
-	$pass = $_GET[ 'password' ];
+	$pass = $_POST[ 'password' ];
 	$pass = md5( $pass );
 
 	// Check the database
@@ -18,15 +19,16 @@ if( isset( $_GET[ 'Login' ] ) ) {
 		$avatar = $row["avatar"];
 
 		// Login successful
-		$html .= "<p>Welcome to the password protected area {$user}</p>";
-		$html .= "<img src=\"{$avatar}\" />";
+		echo "<p>Welcome to the password protected area {$user}</p>";
+		echo "<img src=\"{$avatar}\" />";
 	}
 	else {
 		// Login failed
-		$html .= "<pre><br />Username and/or password incorrect.</pre>";
+		sleep(3);
+		echo "<pre><br />Username and/or password incorrect.</pre>";
 	}
 
 	((is_null($___mysqli_res = mysqli_close($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 }
-
+generateSessionToken();
 ?>

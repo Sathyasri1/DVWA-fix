@@ -1,24 +1,20 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 	// Get input
-	$target = trim($_REQUEST[ 'ip' ]);
+	$target = $_POST[ 'ip' ];
+	$target = stripslashes( $target );
+	
+	// To split the IP into 4 octects
+	$octet = explode( ".", $target );
 
-	// Set blacklist
-	$substitutions = array(
-		'&'  => '',
-		';'  => '',
-		'| ' => '',
-		'-'  => '',
-		'$'  => '',
-		'('  => '',
-		')'  => '',
-		'`'  => '',
-		'||' => '',
-	);
+//checking each octet is integer
+if( ( is_numeric( $octet[0] ) ) && ( is_numeric( $octet[1] ) ) && ( is_numeric( $octet[2] ) ) && ( is_numeric( $octet[3] ) ) ) {
 
-	// Remove any of the characters in the array (blacklist).
-	$target = str_replace( array_keys( $substitutions ), $substitutions, $target );
+	//if the given input is integer then put it together
+	$target = $octet[0] . '.' . $octet[1] . '.' . $octet[2] . '.' . $octet[3];
+
 
 	// Determine OS and execute the ping command.
 	if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
@@ -31,7 +27,11 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 	}
 
 	// Feedback for the end user
-	$html .= "<pre>{$cmd}</pre>";
-}
+	echo "<pre>{$cmd}</pre>";
+} else {
 
+echo "<pre> Error: Entered Invalid IP. </pre>";
+}
+}
+generateSessionToken();
 ?>

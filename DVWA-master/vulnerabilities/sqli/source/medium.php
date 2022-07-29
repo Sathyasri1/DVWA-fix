@@ -1,6 +1,7 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ] ) ) {
+checkToken($_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php'); 
 	// Get input
 	$id = $_POST[ 'id' ];
 
@@ -8,17 +9,17 @@ if( isset( $_POST[ 'Submit' ] ) ) {
 
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
-			$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
+			$query  = "SELECT first_name, last_name FROM users WHERE user_id = $id; LIMIT 1";
 			$result = mysqli_query($GLOBALS["___mysqli_ston"], $query) or die( '<pre>' . mysqli_error($GLOBALS["___mysqli_ston"]) . '</pre>' );
-
+			$row = $result->fetch();
 			// Get results
-			while( $row = mysqli_fetch_assoc( $result ) ) {
+			if($result->rowCount() == 1) {
 				// Display values
 				$first = $row["first_name"];
 				$last  = $row["last_name"];
 
 				// Feedback for end user
-				$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
+				echo "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
 			}
 			break;
 		case SQLITE:
@@ -33,27 +34,20 @@ if( isset( $_POST[ 'Submit' ] ) ) {
 				exit();
 			}
 
-			if ($results) {
+			if ($result !== false) {
 				while ($row = $results->fetchArray()) {
 					// Get values
 					$first = $row["first_name"];
 					$last  = $row["last_name"];
 
 					// Feedback for end user
-					$html .= "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
+				 echo "<pre>ID: {$id}<br />First name: {$first}<br />Surname: {$last}</pre>";
 				}
-			} else {
-				echo "Error in fetch ".$sqlite_db->lastErrorMsg();
-			}
+			} 
 			break;
 	}
 }
 
-// This is used later on in the index.php page
-// Setting it here so we can close the database connection in here like in the rest of the source scripts
-$query  = "SELECT COUNT(*) FROM users;";
-$result = mysqli_query($GLOBALS["___mysqli_ston"],  $query ) or die( '<pre>' . ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)) . '</pre>' );
-$number_of_rows = mysqli_fetch_row( $result )[0];
 
-mysqli_close($GLOBALS["___mysqli_ston"]);
+generateSessionToken();
 ?>

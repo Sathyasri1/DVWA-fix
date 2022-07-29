@@ -4,7 +4,7 @@
 $file = $_GET[ 'page' ];
 
 // Input validation
-if( !fnmatch( "file*", $file ) && $file != "include.php" ) {
+if( $file != "include.php" && $file != "file1.php" && $file != "file2.php" && $file != "file2.php" ) {
 	// This isn't the page we want!
 	echo "ERROR: File not found!";
 	exit;

@@ -1,8 +1,9 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+
 	// Get input
-	$target = $_REQUEST[ 'ip' ];
+	$target = $_POST[ 'ip' ];
 
 	// Determine OS and execute the ping command.
 	if( stristr( php_uname( 's' ), 'Windows NT' ) ) {
