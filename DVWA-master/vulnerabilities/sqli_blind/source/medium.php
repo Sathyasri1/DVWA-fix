@@ -1,9 +1,17 @@
 <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
+
+	//Check Anti-CSRF Token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+
 	// Get input
 	$id = $_POST[ 'id' ];
 	$exists = false;
+
+		// Was a number entered?
+		if(is_numeric( $id )) {
+			$id = intval ($id);
 
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
@@ -36,6 +44,7 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 			}
 			break;
 	}
+}
 
 	if ($exists) {
 		// Feedback for end user
@@ -45,5 +54,5 @@ if( isset( $_POST[ 'Submit' ]  ) ) {
 		$html .= '<pre>User ID is MISSING from the database.</pre>';
 	}
 }
-
+generateSessionToken();
 ?>

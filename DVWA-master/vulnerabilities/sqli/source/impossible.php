@@ -1,14 +1,14 @@
 <?php
 
-if( isset( $_GET[ 'Submit' ] ) ) {
+if( isset( $_POST[ 'Submit' ] ) ) {
 	// Check Anti-CSRF token
 	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
 
 	// Get input
-	$id = $_GET[ 'id' ];
+	$id = $_POST[ 'id' ]; //change
 
 	// Was a number entered?
-	if(is_numeric( $id )) {
+	if(is_numeric( $id ) == true) { //change
 		$id = intval ($id);
 		switch ($_DVWA['SQLI_DB']) {
 			case MYSQL:
@@ -56,6 +56,9 @@ if( isset( $_GET[ 'Submit' ] ) ) {
 
 				break;
 		}
+	} 
+	else{ 
+		echo "Invalid User Id";  // change
 	}
 }
 

@@ -8,10 +8,10 @@ dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 $page = dvwaPageNewGrab();
 $page[ 'title' ] = 'SQL Injection Session Input' . $page[ 'title_separator' ].$page[ 'title' ];
 
-if( isset( $_POST[ 'id' ] ) ) {
-	$_SESSION[ 'id' ] =  $_POST[ 'id' ];
+if( isset( $_SESSion[ 'id' ] ) ) {
+	$_POST[ 'id' ] =  $_SESSION[ 'id' ];
 	//$page[ 'body' ] .= "Session ID set!<br /><br /><br />";
-	$page[ 'body' ] .= "Session ID: {$_SESSION[ 'id' ]}<br /><br /><br />";
+	$page[ 'body' ] .= "Session ID: {$_POST[ 'id' ]}<br /><br /><br />";
 	$page[ 'body' ] .= "<script>window.opener.location.reload(true);</script>";
 }
 

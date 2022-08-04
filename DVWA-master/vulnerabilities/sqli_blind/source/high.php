@@ -1,9 +1,17 @@
 <?php
 
 if( isset( $_COOKIE[ 'id' ] ) ) {
+
+	// Check Anti-CSRF token
+	checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+
 	// Get input
 	$id = $_COOKIE[ 'id' ];
 	$exists = false;
+
+	// Was a number entered?
+	if(is_numeric( $id )) {
+		$id = intval ($id);
 
 	switch ($_DVWA['SQLI_DB']) {
 		case MYSQL:
@@ -37,7 +45,7 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 
 			break;
 	}
-
+	}
 	if ($exists) {
 		// Feedback for end user
 		$html .= '<pre>User ID exists in the database.</pre>';
@@ -56,4 +64,6 @@ if( isset( $_COOKIE[ 'id' ] ) ) {
 	}
 }
 
+//Generate Anti-CSRF Token
+generateSessionToken();
 ?>
