@@ -1,5 +1,6 @@
 <?php
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	
 if( isset( $_POST[ 'Change' ] ) ) {
     
     
@@ -46,6 +47,9 @@ if( isset( $_POST[ 'Change' ] ) ) {
         // Issue with passwords matching
         echo "<pre>Passwords did not match or current password incorrect.</pre>";
     }
+}
+}else {
+    header('Method Not Allowed', true, 405);
 }
 
 // Generate Anti-CSRF token

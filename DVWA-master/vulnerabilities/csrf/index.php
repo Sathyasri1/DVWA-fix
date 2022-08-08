@@ -3,6 +3,7 @@
 define( 'DVWA_WEB_PAGE_TO_ROOT', '../../' );
 require_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/dvwaPage.inc.php';
 
+
 dvwaPageStartup( array( 'authenticated', 'phpids' ) );
 
 $page = dvwaPageNewGrab();
@@ -71,6 +72,7 @@ $page[ 'body' ] .= "
 	$page[ 'body' ] .= " 	" . tokenField();
 
 $page[ 'body' ] .= "
+	
 		</form>
 		{$html}
 	</div>

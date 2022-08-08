@@ -10,7 +10,7 @@ checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php'
 	$octet = explode( ".", $target );
 
 //checking each octet is integer
-if( ( is_numeric( $octet[0] ) ) && ( is_numeric( $octet[1] ) ) && ( is_numeric( $octet[2] ) ) && ( is_numeric( $octet[3] ) ) ) {
+if( ( is_numeric( $octet[0] ) ) && ( is_numeric( $octet[1] ) ) && ( is_numeric( $octet[2] ) ) && ( is_numeric( $octet[3] ) ) && ( sizeof( $octet ) == 4 ) ) {
 
 	//if the given input is integer then put it together
 	$target = $octet[0] . '.' . $octet[1] . '.' . $octet[2] . '.' . $octet[3];

@@ -38,14 +38,14 @@ $page[ 'body' ] .= "
 	<div class=\"vulnerable_code_area\">
 		<h2>Ping a device</h2>
 
-		<form name=\"ping\" action=\"#\" method=\"post\">
+		<form name=\"ping\" action=\"#\" method=\"POST\">
 			<p>
 				Enter an IP address:
 				<input type=\"text\" name=\"ip\" size=\"30\">
 				<input type=\"submit\" name=\"Submit\" value=\"Submit\">
 			</p>\n";
 
-if( $vulnerabilityFile == 'impossible.php' )
+//if( $vulnerabilityFile == 'impossible.php' )
 	$page[ 'body' ] .= "			" . tokenField();
 
 $page[ 'body' ] .= "

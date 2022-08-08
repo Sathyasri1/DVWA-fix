@@ -1,10 +1,12 @@
 <?php
 
-if( isset( $_POST[ 'Change' ] ) ) {
-    
-    
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	
+if( isset( $_POST[ 'Change'] ) ) {
+   
     // Check Anti-CSRF token
     checkToken( $_REQUEST[ 'user_token' ], $_SESSION[ 'session_token' ], 'index.php' );
+
 
     // Get input
     $pass_curr = $_POST[ 'password_current' ];
@@ -47,7 +49,10 @@ if( isset( $_POST[ 'Change' ] ) ) {
         echo "<pre>Passwords did not match or current password incorrect.</pre>";
     }
 }
-
+} else {
+    header('Method Not Allowed', true, 405);
+    
+}
 // Generate Anti-CSRF token
 generateSessionToken();
 

@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 if( isset( $_POST[ 'Submit' ]  ) ) {
 	// Check Anti-CSRF token
