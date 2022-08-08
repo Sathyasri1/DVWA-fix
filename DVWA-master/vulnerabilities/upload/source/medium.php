@@ -18,7 +18,7 @@ if( isset( $_POST[ 'Upload' ] ) ) {
 	// Is it an image?
 	if(( strtolower( $uploaded_ext) == "jpeg" || strtolower( $uploaded_ext) == "png" || strtolower( $uploaded_ext) == "jpg" ) &&
 		( $uploaded_size < 100000 ) && 
-		//($uploaded_type == 'image/jpeg' || $uploaded_type == 'image/png') &&
+		($uploaded_type == 'image/jpeg' || $uploaded_type == 'image/png') &&
 		getimagesize($uploaded_tmp)) {
 
 		// Can we move the file to the upload folder?
