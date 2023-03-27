@@ -1,0 +1,23 @@
+name: php CI
+
+on:
+  #Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+
+    steps:
+    - uses: actions/checkout@v2
+   
+    - name: Boman SAST
+      run: |
+       pip install --extra-index-url https://test.pypi.org/simple/ boman-cli-uat==0.12
+    - name:  Run a multi-line script
+      run: |
+        boman-cli-uat -a run -u https://devapi.boman.ai/v2/
